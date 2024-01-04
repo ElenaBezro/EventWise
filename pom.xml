@@ -11,9 +11,14 @@
 	<groupId>com.bezro</groupId>
 	<artifactId>EventWise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>EventWise</name>
+    <packaging>pom</packaging>
+    <name>EventWise</name>
 	<description>Develop &quot;EventWise,&quot; a simplified event planning platform to demonstrate microservices architecture using Spring Boot. This system will consist of separate microservices for client management, vendor services, and event scheduling.</description>
-	<properties>
+    <modules>
+        <module>ClientService</module>
+        <module>VendorService</module>
+    </modules>
+    <properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
