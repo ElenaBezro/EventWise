@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   client-server:
     container_name: client-server
@@ -6,31 +6,72 @@ services:
       context: ClientService
       dockerfile: Dockerfile
     image: client-server:latest
+    ports:
+      - "8080:8080"
     networks:
-      event-network:
-        ipv4_address: 172.20.128.1
+      - event-network
   vendor-server:
     container_name: vendor-server
     build:
       context: VendorService
       dockerfile: Dockerfile
     image: vendor-server:latest
+    ports:
+      - "8081:8081"
     networks:
-      event-network:
-        ipv4_address: 172.20.128.2
+      - event-network
   event-server:
     container_name: event-server
     build:
       context: EventService
       dockerfile: Dockerfile
     image: event-server:latest
+    ports:
+      - "8082:8082"
     networks:
-      event-network:
-        ipv4_address: 172.20.128.3
+      - event-network
 networks:
   event-network:
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
-          #docker-compose v3+ do not use ip_range
-          ip_range: 172.28.5.0/24
+    driver: bridge
+#version: '3.8'
+#services:
+#  client-server:
+#    container_name: client-server
+#    build:
+#      context: ClientService
+#      dockerfile: Dockerfile
+#    image: client-server:latest
+#    network_mode: "service:localhost"
+#    depends_on:
+#      - localhost
+#
+#  vendor-server:
+#    container_name: vendor-server
+#    build:
+#      context: VendorService
+#      dockerfile: Dockerfile
+#    image: vendor-server:latest
+#    network_mode: "service:localhost"
+#    depends_on:
+#      - localhost
+#
+#  event-server:
+#    container_name: event-server
+#    build:
+#      context: EventService
+#      dockerfile: Dockerfile
+#    image: event-server:latest
+#    depends_on:
+#      - localhost
+#      - vendor-server
+#      - client-server
+#    network_mode: "service:localhost"
+#
+#  localhost:
+#    container_name: localhost
+#    image: alpine:latest
+#    command: sleep infinity
+#    ports:
+#      - "8080:8080"
+#      - "8081:8081"
+#      - "8082:8082"
