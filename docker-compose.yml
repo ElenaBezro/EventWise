@@ -1,0 +1,36 @@
+version: '2'
+services:
+  client-server:
+    container_name: client-server
+    build:
+      context: ClientService
+      dockerfile: Dockerfile
+    image: client-server:latest
+    networks:
+      event-network:
+        ipv4_address: 172.20.128.1
+  vendor-server:
+    container_name: vendor-server
+    build:
+      context: VendorService
+      dockerfile: Dockerfile
+    image: vendor-server:latest
+    networks:
+      event-network:
+        ipv4_address: 172.20.128.2
+  event-server:
+    container_name: event-server
+    build:
+      context: EventService
+      dockerfile: Dockerfile
+    image: event-server:latest
+    networks:
+      event-network:
+        ipv4_address: 172.20.128.3
+networks:
+  event-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          #docker-compose v3+ do not use ip_range
+          ip_range: 172.28.5.0/24
