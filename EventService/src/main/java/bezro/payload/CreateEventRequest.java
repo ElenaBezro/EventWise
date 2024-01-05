@@ -5,11 +5,11 @@ import java.util.List;
 
 public class CreateEventRequest {
     private String eventName;
-    private Long clientId;
-    private Long vendorId;
+    private Integer clientId;
+    private Integer vendorId;
     private LocalDateTime eventDateTime;
 
-    public CreateEventRequest(String eventName, Long clientId, Long vendorId, LocalDateTime eventDateTime) {
+    public CreateEventRequest(String eventName, Integer clientId, Integer vendorId, LocalDateTime eventDateTime) {
         this.eventName = eventName;
         this.clientId = clientId;
         this.vendorId = vendorId;
@@ -24,19 +24,19 @@ public class CreateEventRequest {
         this.eventName = eventName;
     }
 
-    public Long getClientId() {
+    public Integer getClientId() {
         return clientId;
     }
 
-    public void setClientId(Long clientId) {
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
     }
 
-    public Long getVendorId() {
+    public Integer getVendorId() {
         return vendorId;
     }
 
-    public void setVendorId(Long vendorId) {
+    public void setVendorId(Integer vendorId) {
         this.vendorId = vendorId;
     }
 
