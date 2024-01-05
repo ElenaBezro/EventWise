@@ -27,14 +27,14 @@ public class EventService {
 
     public Mono<Void> createEvent(CreateEventRequest createEventRequest) {
         Client client = webClient.get()
-                .uri("http://localhost:8080/api/clients/" + createEventRequest.getClientId())
+                .uri("http://client-server:8080/api/clients/" + createEventRequest.getClientId())
                 .retrieve()
                 .bodyToMono(Client.class)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client not found")))
                 .block();
 
         Boolean isVendorAvailable = webClient.get()
-                .uri("http://localhost:8081/api/vendors/checkAvailability/" + createEventRequest.getVendorId())
+                .uri("http://vendor-server:8081/api/vendors/checkAvailability/" + createEventRequest.getVendorId())
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vendor not found")))
@@ -93,15 +93,6 @@ public class EventService {
         }
         return event.get();
     }
-
-
-//    public void createEvent2(CreateEventRequest createEventRequest) {
-//        Event event = new Event(createEventRequest.getEventName(),
-//                createEventRequest.getClientId(),
-//                createEventRequest.getVendorId(),
-//                createEventRequest.getEventDateTime());
-//        eventRepository.save(event);
-//    }
 
     public void changeName(UpdateEventRequest updateEventRequest, Integer id) {
         Event event = getEventById(id);
